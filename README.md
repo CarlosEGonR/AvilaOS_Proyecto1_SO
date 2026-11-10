@@ -6,6 +6,39 @@ colas), sincronizados por un reloj global. Los procesos productores y
 consumidores se comunican por buffers de capacidad limitada sincronizados con
 semáforos, en el mismo computador o en otro (con latencia de red).
 
+## Para qué sirve
+
+ÁvilaOS es un simulador pensado para entender y comparar cómo un sistema
+operativo reparte la CPU y la memoria y cómo sincroniza procesos con
+semáforos, en un sistema de varios computadores. Permite:
+
+- Crear procesos (CPU bound, I/O bound, productores y consumidores) y buffers.
+- Comparar las políticas de planificación (FCFS, Round Robin, Prioridades
+  apropiativas y EDF) con las mismas cargas, y cambiarlas en caliente.
+- Ver el efecto de la latencia de red cuando un productor o consumidor accede a
+  un buffer que vive en otro computador.
+- Medir throughput, utilización de CPU, tiempo de respuesta, cumplimiento de
+  deadlines y equidad (índice de Jain), por computador y de todo el sistema.
+
+## Cómo funciona
+
+- Un **reloj global** (un hilo de Java) avisa a cada computador en cada ciclo;
+  en cada ciclo cada computador avanza exactamente un ciclo de ejecución.
+- Cada **computador** es una instancia de la misma clase (`Computer`) con su
+  CPU, su RAM y su propio núcleo (`Kernel`): cuatro colas (nuevos, listos,
+  bloqueados, terminados), admisión según la memoria libre y una política de
+  planificación intercambiable (interfaz `SchedulingPolicy`).
+- Cada **proceso** tiene un PCB (id, estado, prioridad, memoria, deadline,
+  contador de programa, etc.). Cuando su deadline llega a 0 se termina.
+- Los **buffers** de capacidad limitada viven en la RAM de un computador. El
+  acceso se sincroniza con tres semáforos propios (`s` = exclusión mutua,
+  `n` = elementos llenos, `e` = espacios vacíos); un proceso que no puede
+  continuar se bloquea en la cola del semáforo y la CPU atiende a otro.
+  Los accesos remotos bloquean al proceso tantos ciclos como la latencia de red.
+- Los semáforos de `java.util.concurrent` solo protegen las estructuras
+  compartidas entre el hilo del reloj y el de la interfaz gráfica.
+- No se usan colecciones de `java.util`: las colas son una `LinkedQueue` propia.
+
 ## Requisitos
 
 - **Java 21 o superior** (el proyecto compila con nivel 21 y se probó con JDK 27).
