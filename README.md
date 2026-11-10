@@ -90,3 +90,16 @@ métricas, valores por defecto) están en [`DECISIONES.md`](DECISIONES.md).
 Las clases `*Prueba.java` son programas con `main` que se ejecutan desde
 NetBeans (clic derecho > *Run File*): semáforos, buffer, `SyncExecutor`,
 latencia remota, memoria, cola enlazada y escenario local/remoto.
+
+## Autores
+
+Proyecto desarrollado en equipo para Sistemas Operativos (2627-1, Universidad
+Metropolitana):
+
+- **Alexandra Loynaz** ([@Aleloynazg](https://github.com/Aleloynazg))
+- **Julieta Thery** ([@julietathery](https://github.com/julietathery))
+- **Carlos** ([@CarlosEGonR](https://github.com/CarlosEGonR))
+
+Este repositorio es una copia del repositorio del equipo
+([Aleloynazg/AvilaOS_Proyecto1_SO](https://github.com/Aleloynazg/AvilaOS_Proyecto1_SO)).
+El historial de commits conserva la autoría de cada integrante.
